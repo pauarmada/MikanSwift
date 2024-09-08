@@ -68,6 +68,8 @@ public class MikanJs {
     private static let particles = try! NSRegularExpression(pattern: "^[とのに]$", options: [])
     private static let hiragana = try! NSRegularExpression(pattern: "[ぁ-んゝ]+", options: [])
     
+    private static let newLine = try! NSRegularExpression(pattern: "\n", options: [])
+    
     // See function SimpleAnalyze(str)
     public static func split(_ string: String) -> [String] {
         guard !string.isEmpty else {
@@ -79,6 +81,9 @@ public class MikanJs {
             .reduce([]) { $0 + $1.split(regex: numbers) }
             .reduce([]) { $0 + $1.split(regex: bracketsBegin) }
             .reduce([]) { $0 + $1.split(regex: bracketsEnd) }
+        
+            // Split the line breaks up so we can count individual lines
+            .reduce([]) { $0 + $1.split(regex: newLine) }
             .compactMap { $0 }
 
         var result: [String] = []

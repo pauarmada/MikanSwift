@@ -81,4 +81,15 @@ final class MikanJsTests: XCTestCase {
             XCTAssertEqual(MikanJs.split($0.key), $0.value)
         }
     }
+    
+    func test_additionalNewLineHandling() {
+        [
+            "常に最新、最高のモバイル。Androidを\n\n開発した同じチームから。":
+                ["常に", "最新、", "最高の", "モバイル。", "Androidを", "\n", "\n", "開発した", "同じ", "チームから。"],
+            "\n\n\n\n":
+                ["\n", "\n", "\n", "\n"]
+        ].forEach {
+            XCTAssertEqual(MikanJs.split($0.key), $0.value)
+        }
+    }
 }
